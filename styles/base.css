@@ -80,6 +80,8 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:60;
 @media (max-width:640px){.hero{padding:0 24px}}
 
 .section{padding:100px 44px;position:relative;border-bottom:1px solid var(--border)}
+.section-full{padding:100px 0}
+.section-inner-full{max-width:100%;margin:0}
 .section-inner{max-width:var(--max);margin:0 auto}
 .section-head{display:grid;grid-template-columns:200px 1fr;gap:40px;margin-bottom:60px;
   align-items:start}

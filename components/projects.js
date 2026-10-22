@@ -38,9 +38,9 @@ export function render(container) {
     </article>`).join('');
 
   container.innerHTML = `
-  <section class="section" id="projects">
-    <div class="section-inner">
-      <div class="section-head">
+  <section class="section section-full" id="projects">
+    <div class="section-inner-full">
+      <div class="section-head" style="padding:0 44px">
         <div class="section-label">03 / Projects</div>
         <div>
           <h2 class="section-title">Selected <span class="accent">work</span>.</h2>
