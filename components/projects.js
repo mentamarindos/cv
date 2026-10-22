@@ -24,13 +24,14 @@ const PROJECTS = [
 export function render(container) {
   const cards = PROJECTS.map(p => `
     <article class="bento-card bento-${p.span}" tabindex="0" aria-label="${p.title}">
+      <div class="bento-topline">
+        <span class="bento-rank">${p.rank}</span>
+        <span class="bento-tier ${p.tier}">${p.tier.replace('tier-','Tier ')}</span>
+      </div>
       <div class="bento-img">
-        <img src="https://picsum.photos/seed/${p.seed}/800/600" alt="${p.title}" loading="lazy" />
-        <div class="bento-overlay"></div>
+        <img src="https://picsum.photos/seed/${p.seed}/800/600" alt="" loading="lazy" />
       </div>
       <div class="bento-body">
-        <span class="bento-tier ${p.tier}">${p.tier.replace('tier-','Tier ')}</span>
-        <div class="bento-rank">${p.rank}</div>
         <h3>${p.title}</h3>
         <p class="bento-desc">${p.desc}</p>
         <div class="bento-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
@@ -44,7 +45,7 @@ export function render(container) {
         <div class="section-label">03 / Projects</div>
         <div>
           <h2 class="section-title">Selected <span class="accent">work</span>.</h2>
-          <p class="section-intro">Bento grid — asymmetric layout. Hover a card to reveal details.</p>
+          <p class="section-intro">A selection of products, tools, and experiments.</p>
         </div>
       </div>
       <div class="bento-grid">${cards}</div>
