@@ -23,7 +23,7 @@ const PROJECTS = [
 
 export function render(container) {
   const cards = PROJECTS.map(p => `
-    <article class="bento-card">
+    <article class="bento-card bento-${p.span}">
       <div class="bento-img">
         <img src="https://picsum.photos/seed/${p.seed}/800/600" alt="${p.title}" loading="lazy" />
         <div class="bento-overlay"></div>
