@@ -51,17 +51,16 @@
   // Scroll progress
   const progress = document.getElementById('progress');
   const updateProgress = () => {
-    const h = document.documentElement;
-    const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    progress.style.width = scrolled + '%';
+    const scrolled = (window.scrollX / (document.body.scrollWidth - window.innerWidth)) * 100;
+    progress.style.width = (isNaN(scrolled) ? 0 : scrolled) + '%';
   };
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // Reveal on scroll
+  // Reveal on scroll (horizontal)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.15, rootMargin: '0px -80px 0px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   setTimeout(() => {
     document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('in'));
@@ -70,9 +69,9 @@
   // Hero parallax grid
   const heroGrid = document.querySelector('.hero-grid');
   window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y < window.innerHeight && heroGrid) {
-      heroGrid.style.transform = `translateY(${y * 0.25}px)`;
+    const x = window.scrollX;
+    if (x < window.innerWidth && heroGrid) {
+      heroGrid.style.transform = `translateX(${x * 0.15}px)`;
     }
   }, { passive: true });
 </script>
