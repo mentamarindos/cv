@@ -79,7 +79,13 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:60;
   .hero-cta{justify-content:flex-start}}
 @media (max-width:640px){.hero{padding:0 24px}}
 
-.section{padding:100px 44px;position:relative;border-bottom:1px solid var(--border)}
+.section{padding:120px 44px;position:relative;border-bottom:1px solid var(--border);
+  background:var(--bg)}
+.section:nth-of-type(even){background:var(--bg-2)}
+.section::before{content:"◆";position:absolute;top:-10px;left:50%;
+  transform:translateX(-50%);color:var(--accent);font-size:12px;
+  background:var(--bg);padding:0 16px;letter-spacing:.2em;z-index:2}
+.section:nth-of-type(even)::before{background:var(--bg-2)}
 .section-full{padding:100px 0}
 .section-inner-full{max-width:100%;margin:0}
 .section-inner{max-width:var(--max);margin:0 auto}
