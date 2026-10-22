@@ -27,9 +27,9 @@ export function render(container) {
       <div class="bento-img">
         <img src="https://picsum.photos/seed/${p.seed}/800/600" alt="${p.title}" loading="lazy" />
         <div class="bento-overlay"></div>
-        <span class="bento-tier ${p.tier}">${p.tier.replace('tier-','Tier ')}</span>
       </div>
       <div class="bento-body">
+        <span class="bento-tier ${p.tier}">${p.tier.replace('tier-','Tier ')}</span>
         <div class="bento-rank">${p.rank}</div>
         <h3>${p.title}</h3>
         <p class="bento-desc">${p.desc}</p>
