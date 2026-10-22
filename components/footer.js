@@ -2,75 +2,68 @@ export function render(container) {
   container.innerHTML = `
   <footer class="fun-footer">
     <canvas class="footer-canvas" id="footerCanvas"></canvas>
-    <div class="footer-marquee">
-      <div class="footer-track">
-        <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
-        <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
+    <div class="footer-content">
+      <div class="footer-marquee">
+        <div class="footer-track">
+          <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
+          <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
+        </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-big">[Your Name]</div>
-      <div class="footer-links">
-        <a href="mailto:[your@email.com]">Email</a>
-        <a href="https://github.com/[your-github]">GitHub</a>
-        <a href="https://linkedin.com/in/[your-linkedin]">LinkedIn</a>
-        <a href="[your-website]">Website</a>
+      <div class="footer-bottom">
+        <div class="footer-big">[Your Name]</div>
+        <div class="footer-links">
+          <a href="mailto:[your@email.com]">Email</a>
+          <a href="https://github.com/[your-github]">GitHub</a>
+          <a href="https://linkedin.com/in/[your-linkedin]">LinkedIn</a>
+          <a href="[your-website]">Website</a>
+        </div>
+        <div class="footer-copy">© 2026 · Built with vanilla HTML, CSS & JS · components</div>
       </div>
-      <div class="footer-copy">© 2026 · Built with vanilla HTML, CSS & JS · components</div>
     </div>
   </footer>`;
 
-  // Soft floating particles animation
   const canvas = container.querySelector('#footerCanvas');
   const ctx = canvas.getContext('2d');
-  let w, h, particles = [];
-  const PARTICLE_COUNT = 40;
+  let w, h, t = 0;
+  const DOT = 6; // pixel size
+  const BAYER = [[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]];
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
-    w = canvas.width = rect.width;
-    h = canvas.height = rect.height;
-  }
-
-  function initParticles() {
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 2.5 + 1,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        hue: Math.random() > 0.5 ? 50 : 320, // yellow or pink
-        alpha: Math.random() * 0.4 + 0.1,
-      });
-    }
+    w = canvas.width = Math.floor(rect.width / DOT);
+    h = canvas.height = Math.floor(rect.height / DOT);
   }
 
   function draw() {
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0) p.x = w;
-      if (p.x > w) p.x = 0;
-      if (p.y < 0) p.y = h;
-      if (p.y > h) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.alpha})`;
-      ctx.fill();
-      // soft glow
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.alpha * 0.15})`;
-      ctx.fill();
-    });
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, w, h);
+    t += 0.02;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        // wave value
+        const wave = Math.sin(x * 0.08 + t) * 0.5 +
+                     Math.sin(y * 0.06 + t * 0.7) * 0.3 +
+                     Math.sin((x + y) * 0.04 + t * 1.2) * 0.2;
+        const v = (wave + 1) * 0.5; // 0..1
+        const threshold = BAYER[y % 4][x % 4] / 16;
+        if (v > threshold) {
+          // color: yellow with slight variation
+          const bright = 0.6 + v * 0.4;
+          ctx.fillStyle = `rgba(255, 230, 0, ${bright})`;
+          ctx.fillRect(x, y, 1, 1);
+        } else {
+          // dark with subtle pink
+          if (v > threshold - 0.05) {
+            ctx.fillStyle = `rgba(255, 60, 172, ${v * 0.4})`;
+            ctx.fillRect(x, y, 1, 1);
+          }
+        }
+      }
+    }
     requestAnimationFrame(draw);
   }
 
   resize();
-  initParticles();
   draw();
-  window.addEventListener('resize', () => { resize(); initParticles(); });
+  window.addEventListener('resize', resize);
 }
