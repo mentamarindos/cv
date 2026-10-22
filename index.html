@@ -50,9 +50,14 @@
 
   // Scroll progress
   const progress = document.getElementById('progress');
+  let progressRaf = null;
   const updateProgress = () => {
-    const scrolled = (window.scrollX / (document.body.scrollWidth - window.innerWidth)) * 100;
-    progress.style.width = (isNaN(scrolled) ? 0 : scrolled) + '%';
+    if (progressRaf) return;
+    progressRaf = requestAnimationFrame(() => {
+      const scrolled = (window.scrollX / (document.body.scrollWidth - window.innerWidth)) * 100;
+      progress.style.width = (isNaN(scrolled) ? 0 : scrolled) + '%';
+      progressRaf = null;
+    });
   };
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
@@ -69,8 +74,8 @@
   }
   function animateScroll() {
     const diff = targetX - currentX;
-    if (Math.abs(diff) < 0.5) { currentX = targetX; window.scrollTo(currentX, 0); animating = false; return; }
-    currentX += diff * 0.1;
+    if (Math.abs(diff) < 1) { currentX = targetX; window.scrollTo(currentX, 0); animating = false; return; }
+    currentX += diff * 0.18;
     window.scrollTo(currentX, 0);
     requestAnimationFrame(animateScroll);
   }
@@ -81,7 +86,7 @@
     const idx = Math.max(0, Math.min(secs.length - 1, sectionIndex() + dir));
     targetX = idx * window.innerWidth;
     if (!animating) { animating = true; requestAnimationFrame(animateScroll); }
-    setTimeout(() => { lock = false; }, 700);
+    setTimeout(() => { lock = false; }, 450);
   }
   window.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
