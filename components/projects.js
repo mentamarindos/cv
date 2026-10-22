@@ -25,13 +25,14 @@ export function render(container) {
   const cards = PROJECTS.map(p => `
     <article class="bento-card bento-${p.span}">
       <div class="bento-img">
-        <img src="https://picsum.photos/seed/${p.seed}/600/400" alt="${p.title}" loading="lazy" />
+        <img src="https://picsum.photos/seed/${p.seed}/800/600" alt="${p.title}" loading="lazy" />
+        <div class="bento-overlay"></div>
         <span class="bento-tier ${p.tier}">${p.tier.replace('tier-','Tier ')}</span>
       </div>
       <div class="bento-body">
         <div class="bento-rank">${p.rank}</div>
         <h3>${p.title}</h3>
-        <p>${p.desc}</p>
+        <p class="bento-desc">${p.desc}</p>
         <div class="bento-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
       </div>
     </article>`).join('');
