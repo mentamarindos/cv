@@ -91,6 +91,7 @@
 
   // keyboard
   window.addEventListener('keydown', (e) => {
+    if (e.target.closest('button, a, input, select, textarea, dialog[open]')) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
       e.preventDefault();
       window.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
