@@ -57,6 +57,14 @@
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
+  // Convert vertical wheel to horizontal scroll
+  window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      window.scrollBy({ left: e.deltaY, behavior: 'auto' });
+    }
+  }, { passive: false });
+
   // Reveal on scroll (horizontal)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
