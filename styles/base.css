@@ -268,7 +268,7 @@ footer a:hover{color:var(--accent)}
 
 /* ---------- BENTO GRID (Projects v1) ---------- */
 .bento-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-  grid-auto-rows:200px}
+  grid-auto-rows:200px;grid-auto-flow:dense}
 .bento-card{border:1px solid var(--border);background:var(--surface);
   overflow:hidden;position:relative;transition:all .4s var(--ease);
   display:block}
