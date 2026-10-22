@@ -274,8 +274,14 @@ nav.top{display:none}
 @media (max-width:900px){.proj-slide{grid-template-columns:1fr;gap:24px;padding:32px 24px}
   .proj-visual{aspect-ratio:16/9}}
 
-.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;
+.contact-canvas{position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;image-rendering:pixelated;
+  image-rendering:crisp-edges;opacity:.5}
+.contact-layout{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:0;
   border:1px solid var(--border);min-height:360px}
+.contact-footer{position:relative;z-index:1;padding:16px 44px;
+  font-size:11px;color:var(--text-3);letter-spacing:.04em;
+  border-top:1px solid var(--border)}
 .contact-big{padding:48px 44px;display:flex;flex-direction:column;
   justify-content:space-between;border-right:1px solid var(--border);
   position:relative;overflow:hidden}

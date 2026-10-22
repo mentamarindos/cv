@@ -19,7 +19,6 @@
   <button class="section-dot" data-i="2"><span class="tag">Skills</span><span class="dot"></span></button>
   <button class="section-dot" data-i="3"><span class="tag">Projects</span><span class="dot"></span></button>
   <button class="section-dot" data-i="4"><span class="tag">Contact</span><span class="dot"></span></button>
-  <button class="section-dot" data-i="5"><span class="tag">Footer</span><span class="dot"></span></button>
 </div>
 
 <nav class="top">
@@ -47,14 +46,12 @@
   import { render as renderSkills } from './components/skills.js';
   import { render as renderProjects } from './components/projects.js';
   import { render as renderContact } from './components/contact.js';
-  import { render as renderFooter } from './components/footer.js';
 
   renderHero(document.getElementById('mount-hero'));
   renderAbout(document.getElementById('mount-about'));
   renderSkills(document.getElementById('mount-skills'));
   renderProjects(document.getElementById('mount-projects'));
   renderContact(document.getElementById('mount-contact'));
-  renderFooter(document.getElementById('mount-footer'));
 
   // Scroll progress
   const progress = document.getElementById('progress');
