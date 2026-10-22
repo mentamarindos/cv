@@ -23,65 +23,68 @@ const PROJECTS = [
 
 export function render(container) {
   const glyphs = {
-    plyntar:'✦',yaukos:'Y',posdesktop:'▦',enigmatic:'◉',encorepad:'✎',
-    noventaynueve:'N',securedrop:'◇',surveypulse:'⌁',spotdiff:'◌',cryptools:'⌘',
-    hatorreyes:'⌖',linkedinhide:'in',prompthub:'✳',middlemen:'M',depth:'◐',
-    footerforge:'F',hiringradar:'⌕',cinebooker:'▷',aliexpress:'A',audiorec:'◖'
+    plyntar:'Pl',yaukos:'Yx',posdesktop:'POS',enigmatic:'En',encorepad:'Ep',
+    noventaynueve:'99',securedrop:'Sd',surveypulse:'Sv',spotdiff:'Sp',cryptools:'Cr',
+    hatorreyes:'Ht',linkedinhide:'in',prompthub:'Ph',middlemen:'Mm',depth:'3D',
+    footerforge:'Ff',hiringradar:'Hr',cinebooker:'Cb',aliexpress:'Ae',audiorec:'Ar'
   };
   const tierOne = PROJECTS.filter(p => p.tier === 'tier-1');
   const apps = PROJECTS.filter(p => p.tier !== 'tier-1');
   const projectIndex = p => PROJECTS.indexOf(p);
-  const icon = p => `<span class="duo-glyph duo-tone-${projectIndex(p) % 8}" aria-hidden="true">${glyphs[p.seed] || p.title[0]}</span>`;
+  const icon = p => `<span class="launch-icon launch-tone-${projectIndex(p) % 8}" aria-hidden="true"><span>${glyphs[p.seed] || p.title.slice(0, 2)}</span></span>`;
   const widgets = tierOne.map((p, i) => `
-    <button class="duo-widget ${i === 0 ? 'duo-widget--lead' : ''}" type="button"
+    <button class="launch-widget ${i === 0 ? 'launch-widget--lead' : ''}" type="button"
       data-project="${projectIndex(p)}" aria-label="Open ${p.title} details">
-      <span class="duo-widget-top">${icon(p)}<span>${i === 0 ? 'Featured project' : 'Project widget'}</span><span class="duo-widget-open" aria-hidden="true">+</span></span>
-      <span class="duo-widget-title">${p.title}</span>
-      <span class="duo-widget-desc">${p.desc}</span>
-      ${i === 0 ? `<span class="duo-widget-tags">${p.tags.slice(0, 4).map(t => `<i>${t}</i>`).join('')}</span>` : ''}
+      <span class="launch-widget-top">${icon(p)}<span class="launch-widget-label">${i === 0 ? 'Big idea' : p.tags[0]}</span><span class="launch-widget-rank">${p.rank}</span></span>
+      <span class="launch-widget-title">${p.title}</span>
+      <span class="launch-widget-desc">${p.desc}</span>
+      ${i === 0 ? `<span class="launch-widget-tags">${p.tags.slice(0, 4).map(t => `<i>${t}</i>`).join('')}</span>` : ''}
     </button>`).join('');
   const appTiles = apps.map(p => `
-    <button class="duo-app" type="button" data-project="${projectIndex(p)}"
+    <button class="launch-app" type="button" data-project="${projectIndex(p)}"
       aria-label="Open ${p.title} details">
-      ${icon(p)}<span class="duo-app-name">${p.title}</span>
+      ${icon(p)}<span class="launch-app-name">${p.title}</span>
     </button>`).join('');
 
   container.innerHTML = `
   <section class="section section-full" id="projects">
     <div class="section-inner-full">
-      <div class="duo-screen">
-        <div class="duo-status"><span>9:41</span><span class="duo-status-right"><i>◔</i><i>⌁</i><b><i></i></b></span></div>
-        <header class="duo-heading">
-          <h2>Project home</h2>
-          <span class="duo-project-count">${PROJECTS.length} projects</span>
+      <div class="project-playground">
+        <header class="launch-head">
+          <div class="launch-head-copy"><h2>Pick a project<span>.</span></h2>
+            <p>Five big ideas. Fifteen more rabbit holes.</p></div>
+          <div class="launch-count"><strong>${PROJECTS.length}</strong><span>things<br>made</span></div>
         </header>
-        <div class="duo-home-layout">
-          <section class="duo-widgets" aria-label="Featured projects">${widgets}</section>
-          <section class="duo-app-library" aria-label="Project apps">
-            <div class="duo-library-head"><h3>App library</h3><span>${apps.length}</span></div>
-            <div class="duo-app-grid">${appTiles}</div>
+        <div class="launch-layout">
+          <section class="launch-widgets" aria-label="Featured projects">
+            <div class="launch-section-heading"><h3>Big builds</h3><span>Worth a closer look</span></div>
+            <div class="launch-widget-grid">${widgets}</div>
+          </section>
+          <section class="launch-apps" aria-label="More projects">
+            <div class="launch-section-heading"><h3>Explore the rest</h3><span>${apps.length} tiny doors</span></div>
+            <div class="launch-app-grid">${appTiles}</div>
           </section>
         </div>
-        <dialog class="duo-detail" aria-labelledby="duo-detail-title">
-          <form method="dialog"><button class="duo-detail-close" aria-label="Close details">x</button></form>
-          <div class="duo-detail-heading"><span class="duo-detail-glyph"></span><div><span class="duo-detail-tier"></span><h3 id="duo-detail-title"></h3></div></div>
-          <p class="duo-detail-desc"></p><div class="duo-detail-tags"></div>
+        <dialog class="project-detail" aria-labelledby="project-detail-title">
+          <form method="dialog"><button class="project-detail-close" aria-label="Close details">x</button></form>
+          <div class="project-detail-heading"><span class="project-detail-icon"></span><div><span class="project-detail-tier"></span><h3 id="project-detail-title"></h3></div></div>
+          <p class="project-detail-desc"></p><div class="project-detail-tags"></div>
         </dialog>
       </div>
     </div>
   </section>`;
 
-  const dialog = container.querySelector('.duo-detail');
+  const dialog = container.querySelector('.project-detail');
   container.querySelectorAll('[data-project]').forEach(button => {
     button.addEventListener('click', () => {
       const p = PROJECTS[Number(button.dataset.project)];
-      const detailGlyph = dialog.querySelector('.duo-detail-glyph');
-      detailGlyph.className = `duo-detail-glyph duo-tone-${projectIndex(p) % 8}`;
+      const detailGlyph = dialog.querySelector('.project-detail-icon');
+      detailGlyph.className = `project-detail-icon launch-tone-${projectIndex(p) % 8}`;
       detailGlyph.textContent = glyphs[p.seed] || p.title[0];
-      dialog.querySelector('.duo-detail-tier').textContent = p.tier.replace('tier-', 'Tier ');
-      dialog.querySelector('#duo-detail-title').textContent = p.title;
-      dialog.querySelector('.duo-detail-desc').textContent = p.desc;
-      dialog.querySelector('.duo-detail-tags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
+      dialog.querySelector('.project-detail-tier').textContent = p.tier.replace('tier-', 'Tier ');
+      dialog.querySelector('#project-detail-title').textContent = p.title;
+      dialog.querySelector('.project-detail-desc').textContent = p.desc;
+      dialog.querySelector('.project-detail-tags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
       dialog.showModal();
     });
   });
