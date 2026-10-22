@@ -41,20 +41,20 @@ export function render(container) {
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         // wave value
-        const wave = Math.sin(x * 0.08 + t) * 0.5 +
-                     Math.sin(y * 0.06 + t * 0.7) * 0.3 +
-                     Math.sin((x + y) * 0.04 + t * 1.2) * 0.2;
+        const wave = Math.sin(x * 0.07 + t) * 0.5 +
+                     Math.sin(y * 0.05 + t * 0.6) * 0.3 +
+                     Math.sin((x + y) * 0.035 + t * 1.1) * 0.2;
         const v = (wave + 1) * 0.5; // 0..1
         const threshold = BAYER[y % 4][x % 4] / 16;
         if (v > threshold) {
-          // color: yellow with slight variation
-          const bright = 0.6 + v * 0.4;
-          ctx.fillStyle = `rgba(255, 230, 0, ${bright})`;
+          // soft cyan
+          const bright = 0.25 + v * 0.25;
+          ctx.fillStyle = `rgba(34, 211, 238, ${bright})`;
           ctx.fillRect(x, y, 1, 1);
         } else {
-          // dark with subtle pink
-          if (v > threshold - 0.05) {
-            ctx.fillStyle = `rgba(255, 60, 172, ${v * 0.4})`;
+          // subtle violet
+          if (v > threshold - 0.08) {
+            ctx.fillStyle = `rgba(167, 139, 250, ${(v * 0.25)})`;
             ctx.fillRect(x, y, 1, 1);
           }
         }
