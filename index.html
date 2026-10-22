@@ -57,11 +57,23 @@
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // Convert vertical wheel to horizontal scroll
+  // Smooth animated horizontal scroll (wheel vertical -> horizontal)
+  let targetX = window.scrollX;
+  let currentX = window.scrollX;
+  let animating = false;
+  function animateScroll() {
+    const diff = targetX - currentX;
+    if (Math.abs(diff) < 0.5) { currentX = targetX; window.scrollTo(currentX, 0); animating = false; return; }
+    currentX += diff * 0.12;
+    window.scrollTo(currentX, 0);
+    requestAnimationFrame(animateScroll);
+  }
   window.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
-      window.scrollBy({ left: e.deltaY, behavior: 'auto' });
+      const max = document.body.scrollWidth - window.innerWidth;
+      targetX = Math.max(0, Math.min(max, targetX + e.deltaY));
+      if (!animating) { animating = true; requestAnimationFrame(animateScroll); }
     }
   }, { passive: false });
 
