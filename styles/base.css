@@ -13,7 +13,7 @@
 .fun-footer{--ac:#fb923c}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;
-  overflow-x:auto;overflow-y:hidden;height:100vh;scroll-snap-type:x proximity}
+  overflow-x:auto;overflow-y:hidden;height:100vh;scroll-snap-type:x mandatory}
 html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 body{
   font-family:"Manrope",system-ui,sans-serif;background:var(--bg);color:var(--text);
@@ -21,7 +21,7 @@ body{
   display:flex;flex-direction:row;height:100vh;overflow:visible;
 }
 .hero,.section,.fun-footer{min-width:100vw;height:100vh;flex-shrink:0;
-  scroll-snap-align:start;overflow-y:auto;overflow-x:hidden}
+  scroll-snap-align:start;overflow:hidden}
 .hero::-webkit-scrollbar,.section::-webkit-scrollbar,.fun-footer::-webkit-scrollbar{display:none}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:#000}
@@ -322,8 +322,8 @@ footer a:hover{color:var(--accent)}
   .footer-copy{text-align:left}}
 
 /* ---------- BENTO GRID (Projects v1) ---------- */
-.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-  grid-auto-rows:200px;grid-auto-flow:dense}
+.bento-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+  grid-auto-rows:150px;grid-auto-flow:dense;padding:0 24px}
 .bento-card{border:1px solid var(--border);background:var(--surface);
   overflow:hidden;position:relative;transition:all .4s var(--ease);
   display:block}
@@ -363,9 +363,10 @@ footer a:hover{color:var(--accent)}
 .bento-card:hover .bento-tags{opacity:1;transform:translateY(0)}
 .bento-tags span{font-size:9px;padding:3px 7px;border-radius:3px;
   background:rgba(255,230,0,.1);color:var(--accent);border:1px solid rgba(255,230,0,.2)}
-@media (max-width:1100px){.bento-grid{grid-template-columns:repeat(3,1fr)}
+@media (max-width:1200px){.bento-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:160px}}
+@media (max-width:900px){.bento-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:150px}
   .bento-wide{grid-column:span 2}
   .bento-wide-tall{grid-column:span 2;grid-row:span 2}}
-@media (max-width:760px){.bento-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
+@media (max-width:600px){.bento-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}
   .bento-wide,.bento-wide-tall{grid-column:span 2}
   .bento-tall{grid-row:span 1}}
