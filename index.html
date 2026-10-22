@@ -57,25 +57,54 @@
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // Smooth animated horizontal scroll (wheel vertical -> horizontal)
-  let targetX = window.scrollX;
-  let currentX = window.scrollX;
+  // Smooth animated horizontal scroll: one wheel tick = one section
+  const sections = () => Array.from(document.querySelectorAll('.hero,.section,.fun-footer'));
+  let targetX = 0;
+  let currentX = 0;
   let animating = false;
+  let lock = false;
+  function sectionIndex() {
+    const vw = window.innerWidth;
+    return Math.round(currentX / vw);
+  }
   function animateScroll() {
     const diff = targetX - currentX;
     if (Math.abs(diff) < 0.5) { currentX = targetX; window.scrollTo(currentX, 0); animating = false; return; }
-    currentX += diff * 0.12;
+    currentX += diff * 0.1;
     window.scrollTo(currentX, 0);
     requestAnimationFrame(animateScroll);
+  }
+  function go(dir) {
+    if (lock) return;
+    lock = true;
+    const secs = sections();
+    const idx = Math.max(0, Math.min(secs.length - 1, sectionIndex() + dir));
+    targetX = idx * window.innerWidth;
+    if (!animating) { animating = true; requestAnimationFrame(animateScroll); }
+    setTimeout(() => { lock = false; }, 700);
   }
   window.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
-      const max = document.body.scrollWidth - window.innerWidth;
-      targetX = Math.max(0, Math.min(max, targetX + e.deltaY));
-      if (!animating) { animating = true; requestAnimationFrame(animateScroll); }
+      go(e.deltaY > 0 ? 1 : -1);
     }
   }, { passive: false });
+
+  // keyboard
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+  });
+
+  // touch swipe
+  let touchStartX = null;
+  window.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  window.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+    touchStartX = null;
+  }, { passive: true });
 
   // Reveal on scroll (horizontal)
   const io = new IntersectionObserver((entries) => {
