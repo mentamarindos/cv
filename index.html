@@ -13,6 +13,14 @@
 <body>
 
 <div class="progress" id="progress"></div>
+<div class="section-dots" id="sectionDots">
+  <button class="section-dot active" data-i="0"><span class="tag">Hero</span><span class="dot"></span></button>
+  <button class="section-dot" data-i="1"><span class="tag">About</span><span class="dot"></span></button>
+  <button class="section-dot" data-i="2"><span class="tag">Skills</span><span class="dot"></span></button>
+  <button class="section-dot" data-i="3"><span class="tag">Projects</span><span class="dot"></span></button>
+  <button class="section-dot" data-i="4"><span class="tag">Contact</span><span class="dot"></span></button>
+  <button class="section-dot" data-i="5"><span class="tag">Footer</span><span class="dot"></span></button>
+</div>
 
 <nav class="top">
   <div class="logo"><span class="mark">YN</span>[Your Name]</div>
@@ -61,6 +69,22 @@
   };
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+
+  // Section dots: active state + click to scroll
+  const dots = document.querySelectorAll('.section-dot');
+  function updateDots() {
+    const idx = Math.round(window.scrollX / window.innerWidth);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // update --ac on html? dots use var(--ac, accent) from parent; set per active not needed
+  }
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+  dots.forEach(d => {
+    d.addEventListener('click', () => {
+      const i = parseInt(d.dataset.i, 10);
+      window.scrollTo({ left: i * window.innerWidth, behavior: 'smooth' });
+    });
+  });
 
   // Horizontal scroll: wheel vertical -> horizontal (native smooth + snap)
   window.addEventListener('wheel', (e) => {
