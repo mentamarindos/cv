@@ -31,24 +31,7 @@
 <div id="mount-projects"></div>
 <div id="mount-contact"></div>
 
-<footer class="fun-footer">
-  <div class="footer-marquee">
-    <div class="footer-track">
-      <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
-      <span>AVAILABLE FOR WORK ✦ OPEN TO COLLABORATIONS ✦ LET'S BUILD SOMETHING GREAT ✦ FULL-STACK DEVELOPER ✦ </span>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-big">[Your Name]</div>
-    <div class="footer-links">
-      <a href="mailto:[your@email.com]">Email</a>
-      <a href="https://github.com/[your-github]">GitHub</a>
-      <a href="https://linkedin.com/in/[your-linkedin]">LinkedIn</a>
-      <a href="[your-website]">Website</a>
-    </div>
-    <div class="footer-copy">© 2026 · Built with vanilla HTML, CSS & JS · components</div>
-  </div>
-</footer>
+<div id="mount-footer"></div>
 
 <script type="module">
   import { render as renderHero } from './components/hero.js';
@@ -56,12 +39,14 @@
   import { render as renderSkills } from './components/skills.js';
   import { render as renderProjects } from './components/projects.js';
   import { render as renderContact } from './components/contact.js';
+  import { render as renderFooter } from './components/footer.js';
 
   renderHero(document.getElementById('mount-hero'));
   renderAbout(document.getElementById('mount-about'));
   renderSkills(document.getElementById('mount-skills'));
   renderProjects(document.getElementById('mount-projects'));
   renderContact(document.getElementById('mount-contact'));
+  renderFooter(document.getElementById('mount-footer'));
 
   // Scroll progress
   const progress = document.getElementById('progress');
