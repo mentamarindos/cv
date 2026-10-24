@@ -1,24 +1,24 @@
 const PROJECTS = [
-  { rank:'01', tier:'tier-1', title:'Plyntar — Magic Image Editor', desc:'Web image editor with bg removal & text overlays. Supabase + Cloudflare Workers, AdonisJS backend, MinIO.', tags:['React','TS','Supabase','Cloudflare'] },
-  { rank:'02', tier:'tier-1', title:'Yaukos Express Web', desc:'Marketplace (Astro+React) with Supabase, R2, Playwright E2E, Vitest.', tags:['Astro','React','Supabase'] },
-  { rank:'03', tier:'tier-1', title:'Yaukos POS Desktop', desc:'Desktop POS in Go, SQLite, cloud sync (outbox, dead-letter, migrations).', tags:['Go','SQLite','Desktop'] },
-  { rank:'04', tier:'tier-1', title:'Enigmatic — Loto Oracle', desc:'AI agent forecasting lottery via high-dim model (weather/lunar/seasonal). Bun/TS.', tags:['Bun','TS','AI'] },
-  { rank:'05', tier:'tier-1', title:'EncorePad', desc:'Windows desktop widget (Tauri) for notes + global text expansion. v0.8.x.', tags:['Tauri','Rust','Windows'] },
-  { rank:'06', tier:'tier-2', title:'Noventa Nueve POS', desc:'Premium POS (Expo/RN) with Supabase realtime inventory, barcode, multilingual.', tags:['Expo','RN','Supabase'] },
-  { rank:'07', tier:'tier-2', title:'Securedrop', desc:'Zero-knowledge secret sharing, browser-side encryption, self-destructing links. Laravel 11.', tags:['Laravel','PHP','Crypto'] },
-  { rank:'08', tier:'tier-2', title:'SurveyPulse', desc:'Multi-tenant survey engine, tenant isolation at data layer, JWT auth.', tags:['Node','TS','Drizzle'] },
-  { rank:'09', tier:'tier-2', title:'Spot-the-Difference Gen', desc:'Auto-generates puzzles via object detection + OpenCV inpainting.', tags:['Python','OpenCV','CV'] },
-  { rank:'10', tier:'tier-2', title:'Cryptools', desc:'Crypto wallet scanner CLI & dashboard (Bun) with Tor/Warp.', tags:['Bun','TS','CLI'] },
-  { rank:'11', tier:'tier-2', title:'Hatorreyes', desc:'Mobile livestock records (Expo), offline-first, messaging mental model.', tags:['Expo','RN','Offline'] },
-  { rank:'12', tier:'tier-2', title:'LinkedIn Hide Extension', desc:'Chrome ext restoring Hide button, blocking users/companies, premium cloud sync.', tags:['Chrome Ext','JS','Cloud'] },
-  { rank:'13', tier:'tier-3', title:'Prompt Hub PWA', desc:'Private E2E-encrypted notes sync as PWA.', tags:['PWA','E2E','Sync'] },
-  { rank:'14', tier:'tier-3', title:'Middle-Men MCP', desc:'Middleware for multi-LLM communication via GitHub MCP.', tags:['Node','MCP','LLMs'] },
-  { rank:'15', tier:'tier-3', title:'Image Depth Effect', desc:'iPhone-clock-style depth effect on the web.', tags:['React','Canvas','FX'] },
-  { rank:'16', tier:'tier-3', title:'Footer Forge', desc:'Image → footer art, auto-compress ~100KB (WebP), 8 styles.', tags:['React','Vite','Img'] },
-  { rank:'17', tier:'tier-3', title:'Hiring Radar', desc:'Python job-post tracker vs profile, zero deps, SQLite, dashboard.', tags:['Python','SQLite','CLI'] },
-  { rank:'18', tier:'tier-3', title:'CineBooker API', desc:'Laravel 11 REST API for cinema booking, Sanctum auth.', tags:['Laravel','PHP','REST'] },
-  { rank:'19', tier:'tier-3', title:'AliExpress Crawler', desc:'Product & image crawler with local dashboard and CLI.', tags:['Node','Express','Crawler'] },
-  { rank:'20', tier:'tier-3', title:'AudioRecorder (Android)', desc:'Android audio recorder in Kotlin.', tags:['Kotlin','Android'] },
+  { rank:'01', tier:'tier-1', seed:'plyntar', title:'Plyntar — Magic Image Editor', desc:'Web image editor with bg removal & text overlays. Supabase + Cloudflare Workers, AdonisJS backend, MinIO.', tags:['React','TS','Supabase','Cloudflare'] },
+  { rank:'02', tier:'tier-1', seed:'yaukos', title:'Yaukos Express Web', desc:'Marketplace (Astro+React) with Supabase, R2, Playwright E2E, Vitest.', tags:['Astro','React','Supabase'] },
+  { rank:'03', tier:'tier-1', seed:'posdesktop', title:'Yaukos POS Desktop', desc:'Desktop POS in Go, SQLite, cloud sync (outbox, dead-letter, migrations).', tags:['Go','SQLite','Desktop'] },
+  { rank:'04', tier:'tier-1', seed:'enigmatic', title:'Enigmatic — Loto Oracle', desc:'AI agent forecasting lottery via high-dim model (weather/lunar/seasonal). Bun/TS.', tags:['Bun','TS','AI'] },
+  { rank:'05', tier:'tier-1', seed:'encorepad', title:'EncorePad', desc:'Windows desktop widget (Tauri) for notes + global text expansion. v0.8.x.', tags:['Tauri','Rust','Windows'] },
+  { rank:'06', tier:'tier-2', seed:'noventaynueve', title:'Noventa Nueve POS', desc:'Premium POS (Expo/RN) with Supabase realtime inventory, barcode, multilingual.', tags:['Expo','RN','Supabase'] },
+  { rank:'07', tier:'tier-2', seed:'securedrop', title:'Securedrop', desc:'Zero-knowledge secret sharing, browser-side encryption, self-destructing links. Laravel 11.', tags:['Laravel','PHP','Crypto'] },
+  { rank:'08', tier:'tier-2', seed:'surveypulse', title:'SurveyPulse', desc:'Multi-tenant survey engine, tenant isolation at data layer, JWT auth.', tags:['Node','TS','Drizzle'] },
+  { rank:'09', tier:'tier-2', seed:'spotdiff', title:'Spot-the-Difference Gen', desc:'Auto-generates puzzles via object detection + OpenCV inpainting.', tags:['Python','OpenCV','CV'] },
+  { rank:'10', tier:'tier-2', seed:'cryptools', title:'Cryptools', desc:'Crypto wallet scanner CLI & dashboard (Bun) with Tor/Warp.', tags:['Bun','TS','CLI'] },
+  { rank:'11', tier:'tier-2', seed:'hatorreyes', title:'Hatorreyes', desc:'Mobile livestock records (Expo), offline-first, messaging mental model.', tags:['Expo','RN','Offline'] },
+  { rank:'12', tier:'tier-2', seed:'linkedinhide', title:'LinkedIn Hide Extension', desc:'Chrome ext restoring Hide button, blocking users/companies, premium cloud sync.', tags:['Chrome Ext','JS','Cloud'] },
+  { rank:'13', tier:'tier-3', seed:'prompthub', title:'Prompt Hub PWA', desc:'Private E2E-encrypted notes sync as PWA.', tags:['PWA','E2E','Sync'] },
+  { rank:'14', tier:'tier-3', seed:'middlemen', title:'Middle-Men MCP', desc:'Middleware for multi-LLM communication via GitHub MCP.', tags:['Node','MCP','LLMs'] },
+  { rank:'15', tier:'tier-3', seed:'depth', title:'Image Depth Effect', desc:'iPhone-clock-style depth effect on the web.', tags:['React','Canvas','FX'] },
+  { rank:'16', tier:'tier-3', seed:'footerforge', title:'Footer Forge', desc:'Image → footer art, auto-compress ~100KB (WebP), 8 styles.', tags:['React','Vite','Img'] },
+  { rank:'17', tier:'tier-3', seed:'hiringradar', title:'Hiring Radar', desc:'Python job-post tracker vs profile, zero deps, SQLite, dashboard.', tags:['Python','SQLite','CLI'] },
+  { rank:'18', tier:'tier-3', seed:'cinebooker', title:'CineBooker API', desc:'Laravel 11 REST API for cinema booking, Sanctum auth.', tags:['Laravel','PHP','REST'] },
+  { rank:'19', tier:'tier-3', seed:'aliexpress', title:'AliExpress Crawler', desc:'Product & image crawler with local dashboard and CLI.', tags:['Node','Express','Crawler'] },
+  { rank:'20', tier:'tier-3', seed:'audiorec', title:'AudioRecorder (Android)', desc:'Android audio recorder in Kotlin.', tags:['Kotlin','Android'] },
 ];
 
 const TIER_META = {
@@ -36,6 +36,13 @@ const FILTERS = [
 
 const INTRO_ALL = 'Twenty shipped builds across web, desktop, mobile and CLI.';
 
+const GLYPHS = {
+  plyntar:'Pl',yaukos:'Yx',posdesktop:'POS',enigmatic:'En',encorepad:'Ep',
+  noventaynueve:'99',securedrop:'Sd',surveypulse:'Sv',spotdiff:'Sp',cryptools:'Cr',
+  hatorreyes:'Ht',linkedinhide:'in',prompthub:'Ph',middlemen:'Mm',depth:'3D',
+  footerforge:'Ff',hiringradar:'Hr',cinebooker:'Cb',aliexpress:'Ae',audiorec:'Ar'
+};
+
 const esc = value => String(value)
   .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
@@ -45,16 +52,16 @@ export function render(container) {
   const indexOf = p => PROJECTS.indexOf(p);
   const countFor = id => id === 'all' ? PROJECTS.length : PROJECTS.filter(p => p.tier === id).length;
 
-  const cards = PROJECTS.map(p => `
-    <button class="proj-card" type="button" data-project="${indexOf(p)}" data-tier="${p.tier}"
+  /* one accent per card, cycled from the site's own section accents */
+  const ACCENTS = ['#34d399','#22d3ee','#ff3cac','#a78bfa','#ffe600','#fb923c'];
+
+  const cards = PROJECTS.map((p, i) => `
+    <button class="proj-icon" type="button" data-project="${indexOf(p)}" data-tier="${p.tier}"
+      style="--i:${i};--pc:${ACCENTS[i % ACCENTS.length]}"
       aria-label="Open details for ${esc(p.title)}">
-      <span class="proj-card-top">
-        <span class="proj-card-rank">${esc(p.rank)}</span>
-        <span class="proj-card-tier">${esc(TIER_META[p.tier].label)}</span>
-      </span>
-      <span class="proj-card-title">${esc(p.title)}</span>
-      <span class="proj-card-desc">${esc(p.desc)}</span>
-      <span class="proj-card-tags">${p.tags.map(t => `<i>${esc(t)}</i>`).join('')}</span>
+      <span class="proj-icon-tile"><span>${esc(GLYPHS[p.seed] || p.title.slice(0, 2))}</span></span>
+      <span class="proj-icon-label">${esc(p.title.split(' — ')[0])}</span>
+      <span class="proj-icon-meta">${esc(p.tags[0])}</span>
     </button>`).join('');
 
   const filterButtons = FILTERS.map(f => `
@@ -92,8 +99,9 @@ export function render(container) {
   </section>`;
 
   const subtitle = container.querySelector('[data-role="subtitle"]');
+  const board = container.querySelector('.proj-board');
   const grid = container.querySelector('.proj-grid');
-  const cardEls = [...grid.querySelectorAll('.proj-card')];
+  const cardEls = [...grid.querySelectorAll('.proj-icon')];
   const filterBtns = [...container.querySelectorAll('.proj-filter')];
   const dialog = container.querySelector('.project-detail');
   const detailTier = dialog.querySelector('.project-detail-tier');
@@ -173,6 +181,26 @@ export function render(container) {
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => setFilter(btn.dataset.filter));
   });
+  /* ---- environment parallax: panes drift against the pointer by depth ---- */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let raf = null;
+    board.addEventListener('pointermove', event => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        const rect = board.getBoundingClientRect();
+        const dx = (event.clientX - rect.left) / rect.width - .5;
+        const dy = (event.clientY - rect.top) / rect.height - .5;
+        board.style.setProperty('--px', (dx * -10).toFixed(2));
+        board.style.setProperty('--py', (dy * -10).toFixed(2));
+        raf = null;
+      });
+    });
+    board.addEventListener('pointerleave', () => {
+      board.style.setProperty('--px', '0');
+      board.style.setProperty('--py', '0');
+    });
+  }
+
   window.addEventListener('resize', layoutGrid, { passive: true });
   layoutGrid();
 }
