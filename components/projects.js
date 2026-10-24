@@ -83,9 +83,15 @@ export function render(container) {
         <div class="proj-grid">${cards}</div>
       </div>
       <dialog class="project-detail" aria-labelledby="project-detail-title">
-        <form method="dialog"><button class="project-detail-close" aria-label="Close details">&times;</button></form>
-        <span class="project-detail-tier"></span>
-        <h3 id="project-detail-title"></h3>
+        <button class="project-detail-close" type="button" aria-label="Close details">&times;</button>
+        <div class="project-detail-body">
+        <div class="project-detail-head">
+          <span class="project-detail-icon"></span>
+          <div class="project-detail-headings">
+            <span class="project-detail-tier"></span>
+            <h3 id="project-detail-title"></h3>
+          </div>
+        </div>
         <p class="project-detail-desc"></p>
         <div class="project-detail-tags"></div>
         <div class="project-detail-foot">
@@ -93,6 +99,7 @@ export function render(container) {
           <span class="project-detail-counter"></span>
           <button class="project-detail-nav" type="button" data-step="1" aria-label="Next project">${CHEVRON('next')}</button>
           <span class="project-detail-hint">Arrow keys to browse</span>
+        </div>
         </div>
       </dialog>
     </div>
@@ -104,6 +111,7 @@ export function render(container) {
   const cardEls = [...grid.querySelectorAll('.proj-icon')];
   const filterBtns = [...container.querySelectorAll('.proj-filter')];
   const dialog = container.querySelector('.project-detail');
+  const detailIcon = dialog.querySelector('.project-detail-icon');
   const detailTier = dialog.querySelector('.project-detail-tier');
   const detailTitle = dialog.querySelector('#project-detail-title');
   const detailDesc = dialog.querySelector('.project-detail-desc');
@@ -113,7 +121,25 @@ export function render(container) {
   let active = 0;
   let lastTrigger = null;
 
-  const fill = p => {
+  /* View Transitions when the browser has them, CSS fallback otherwise.
+     `kind` picks the choreography: open / close / next / prev. The class goes
+     on <html> because ::view-transition-* pseudos can't read element state. */
+  const supportsVT = typeof document.startViewTransition === 'function';
+  if (supportsVT) dialog.classList.add('vt');
+  const VT_KINDS = ['vt-open','vt-close','vt-next','vt-prev'];
+  const withVT = (update, kind) => {
+    if (!supportsVT) return update();
+    const root = document.documentElement;
+    VT_KINDS.forEach(k => root.classList.remove(k));
+    root.classList.add(`vt-${kind}`);
+    const transition = document.startViewTransition(update);
+    transition.finished.finally(() => VT_KINDS.forEach(k => root.classList.remove(k)));
+    return transition;
+  };
+
+  const fillNow = p => {
+    detailIcon.textContent = GLYPHS[p.seed] || p.title.slice(0, 2);
+    detailIcon.style.setProperty('--pc', ACCENTS[indexOf(p) % ACCENTS.length]);
     detailTier.textContent = TIER_META[p.tier].label;
     detailTitle.textContent = p.title;
     detailDesc.textContent = p.desc;
@@ -121,17 +147,52 @@ export function render(container) {
     detailCounter.textContent = `${p.rank} / ${PROJECTS.length}`;
   };
 
+  const fill = (p, kind) => withVT(() => fillNow(p), kind);
+
+  /* The sheet grows out of the clicked icon (--ox/--oy = its center) and
+     shrinks back into it on close. Pure transform/opacity view transitions —
+     no shared-element size morph, which re-rasters a fullscreen texture
+     every frame and stutters. */
+  const setOrigin = trigger => {
+    const tile = trigger && trigger.querySelector('.proj-icon-tile');
+    if (!tile) return;
+    const r = tile.getBoundingClientRect();
+    const root = document.documentElement;
+    root.style.setProperty('--ox', `${(((r.left + r.width / 2) / innerWidth) * 100).toFixed(2)}%`);
+    root.style.setProperty('--oy', `${(((r.top + r.height / 2) / innerHeight) * 100).toFixed(2)}%`);
+  };
+
   const open = (p, trigger) => {
     active = indexOf(p);
     lastTrigger = trigger;
-    fill(p);
-    dialog.showModal();
+    setOrigin(trigger);
+    withVT(() => { fillNow(p); dialog.showModal(); }, 'open');
   };
 
   const step = dir => {
     active = (active + dir + PROJECTS.length) % PROJECTS.length;
-    fill(PROJECTS[active]);
+    fill(PROJECTS[active], dir === 1 ? 'next' : 'prev');
   };
+
+  const close = () => {
+    if (!dialog.open) return;
+    setOrigin(lastTrigger);
+    if (!supportsVT) { dialog.close(); return; }
+    const root = document.documentElement;
+    VT_KINDS.forEach(k => root.classList.remove(k));
+    root.classList.add('vt-close');
+    let transition;
+    try {
+      transition = document.startViewTransition(() => dialog.close());
+    } catch {
+      dialog.close();
+      return;
+    }
+    transition.finished.finally(() => VT_KINDS.forEach(k => root.classList.remove(k)));
+  };
+
+  dialog.querySelector('.project-detail-close')
+    .addEventListener('click', close);
 
   cardEls.forEach(card => {
     card.addEventListener('click', () => open(PROJECTS[Number(card.dataset.project)], card));
@@ -144,8 +205,12 @@ export function render(container) {
     if (event.key === 'ArrowRight') { event.preventDefault(); step(1); }
     else if (event.key === 'ArrowLeft') { event.preventDefault(); step(-1); }
   });
+  dialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    close();
+  });
   dialog.addEventListener('click', event => {
-    if (event.target === dialog) dialog.close();
+    if (event.target === dialog) close();
   });
   dialog.addEventListener('close', () => {
     if (lastTrigger) lastTrigger.focus();
