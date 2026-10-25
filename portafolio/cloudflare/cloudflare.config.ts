@@ -4,7 +4,7 @@ import { bindings, defineConfig } from "cf/config";
 export default defineConfig({
   worker: {
     main: worker,
-    name: "cv-views",
+    name: "viewpulse",
     compatibilityDate: "2026-10-01",
     env: {
       DB: bindings.d1({

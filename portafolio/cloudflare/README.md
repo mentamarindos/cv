@@ -1,6 +1,6 @@
 # Cloudflare view counter 🐦
 
-**Live URL:** https://cv-views.windenclientes.workers.dev
+**Live URL:** https://viewpulse.windenclientes.workers.dev
 (wired into `components/data.js` → `VIEWS.api`)
 
 One tiny Worker + D1 = real view counts with countries, unique visitors,
@@ -54,7 +54,7 @@ npx wrangler d1 create cv-views
 npx wrangler d1 execute cv-views --remote --file schema.sql
 
 # 4. deploy the worker — it prints your URL, e.g.
-#    https://cv-views.yourname.workers.dev
+#    https://viewpulse.yourname.workers.dev
 npx wrangler deploy
 ```
 
@@ -64,7 +64,7 @@ Paste the URL into `portafolio/components/data.js`:
 
 ```js
 export const VIEWS = {
-  api: 'https://cv-views.yourname.workers.dev',  // ← here
+  api: 'https://viewpulse.yourname.workers.dev',  // ← here
   ...
 ```
 
@@ -75,8 +75,8 @@ back to the placeholder numbers — nothing breaks. ✅
 ## Test it
 
 ```bash
-curl https://cv-views.yourname.workers.dev/hit    # +1 view (ZZ = unknown locally)
-curl https://cv-views.yourname.workers.dev/stats  # read-only, no +1
+curl https://viewpulse.yourname.workers.dev/hit    # +1 view (ZZ = unknown locally)
+curl https://viewpulse.yourname.workers.dev/stats  # read-only, no +1
 ```
 
 `/stats` returns `{ total, uniques, countries:[{code,views}], recent:[{day,views}]×14, devices:{desktop,mobile,tablet} }`.

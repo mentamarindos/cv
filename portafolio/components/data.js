@@ -120,7 +120,7 @@ export const GITHUB_LEVELS = null;
    null — or if the Worker is unreachable — the modal shows the
    placeholder numbers below instead. */
 export const VIEWS = {
-  api: 'https://cv-views.windenclientes.workers.dev',
+  api: 'https://viewpulse.windenclientes.workers.dev',
   total: 1247,
   uniques: 812,
   devices: { desktop: 790, mobile: 398, tablet: 59 },
