@@ -1,6 +1,6 @@
 import { html, Fragment, useState, useEffect } from './preact.js';
 import { PROFILE } from './data.js';
-import { Eye } from './icons.js';
+import ViewCounter from './ViewCounter.js';
 
 /* Reproduces the original type/erase cycle: a role appears as a
    letter wave (staggered ch-in animation), holds, erases from the
@@ -34,15 +34,8 @@ function useTypewriter(roles, enabled) {
 }
 
 export default function Hero() {
-  const [views, setViews] = useState(0);
   const [reduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
   const { str, shown, gen } = useTypewriter(PROFILE.roles, !reduced);
-
-  useEffect(() => {
-    const n = parseInt(localStorage.getItem('cv-views') || '0', 10) + 1;
-    localStorage.setItem('cv-views', String(n));
-    setViews(19 + n);
-  }, []);
 
   return html`
     <${Fragment}>
@@ -63,9 +56,7 @@ export default function Hero() {
           </div>
           <div class="loc">${PROFILE.city} · ${PROFILE.country}</div>
         </div>
-        <div class="views" title="Profile views">
-          <${Eye} /> <span>${views}</span>
-        </div>
+        <${ViewCounter} />
       </section>
     <//>`;
 }
