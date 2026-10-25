@@ -1,6 +1,6 @@
 # Cloudflare view counter 🐦
 
-**Live URL:** https://viewpulse.windenclientes.workers.dev
+**Live URL:** https://viewpulse.edger.workers.dev
 (wired into `components/data.js` → `VIEWS.api`)
 
 One tiny Worker + D1 = real view counts with countries, unique visitors,
