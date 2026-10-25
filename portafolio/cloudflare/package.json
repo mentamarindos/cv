@@ -1,0 +1,18 @@
+{
+  "name": "cloudflare",
+  "version": "1.0.0",
+  "description": "One tiny Worker + D1 = real view counts with countries, unique visitors, devices, referrers and a 14-day trend. Visitor country comes free from Cloudflare (`request.cf.country`) — no IP API. No raw IP is stored; unique visitors use a salted daily hash (set a secret for better hashing: `npx wrangler secret put SALT`). Bots are filtered out automatically.",
+  "main": "test-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^2.0.0-beta.v.4",
+    "cf": "^0.15.0",
+    "wrangler": "^4.152.0"
+  }
+}

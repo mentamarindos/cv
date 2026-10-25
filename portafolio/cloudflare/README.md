@@ -1,10 +1,42 @@
 # Cloudflare view counter 🐦
 
+**Live URL:** https://cv-views.windenclientes.workers.dev
+(wired into `components/data.js` → `VIEWS.api`)
+
 One tiny Worker + D1 = real view counts with countries, unique visitors,
 devices, referrers and a 14-day trend. Visitor country comes free from
 Cloudflare (`request.cf.country`) — no IP API. No raw IP is stored; unique
-visitors use a salted daily hash (set a secret for better hashing:
-`npx wrangler secret put SALT`). Bots are filtered out automatically.
+visitors use a salted daily hash (secret `SALT` is set). Bots are filtered.
+
+## Deployed with the `cf` CLI (Oct 2026) — Windows notes 🪟
+
+The new `cf` CLI (v1.0.0-beta) has two rough edges on native Windows:
+its build step can't spawn the wrangler/vite bundler binaries, and
+multiline `--sql` args break. What worked:
+
+```bash
+npm i -g cf                      # one-time
+cf auth login                    # one-time
+cf d1 create --name cv-views     # note the printed uuid
+
+# schema: single-line SQL, comments stripped (multiline args break on Windows)
+SQL=$(sed 's/--.*$//' schema.sql | tr '\n' ' ' | tr -s ' ')
+cf d1 query <DATABASE_UUID> --sql "$SQL"
+
+# deploy: hand-rolled Build Output (.cloudflare/output/v0/, kept in repo)
+# + deploy --prebuilt skips the broken bundler step
+printf 'SALT=<random>\n' > .salt.tmp   # keep out of git
+cf deploy --prebuilt --mode production --secrets-file .salt.tmp
+rm .salt.tmp
+```
+
+node_modules/, dist/ and secrets files are gitignored; the checked-in
+`cloudflare.config.ts` documents the intended config for `cf` builds
+once its Windows bundler works. `package.json` pins the local
+wrangler/vite-plugin/cf dev deps.
+
+The classic wrangler flow still works as an alternative:
+`npx wrangler d1 execute cv-views --remote --file schema.sql && npx wrangler deploy`.
 
 ## Deploy (one time, ~5 minutes)
 

@@ -1,0 +1,9 @@
+{
+  "name": "cv-views",
+  "compatibilityDate": "2026-10-01",
+  "workersDev": true,
+  "env": {
+    "DB": { "type": "d1", "id": "d87efa6c-9d59-42a9-a6ec-1e7145ef6248" }
+  },
+  "manifest": { "type": "partial", "mainModule": "worker.js", "modules": {} }
+}
